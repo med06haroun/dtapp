@@ -15,7 +15,7 @@ class FeatureCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: Colors.orange),
+            Icon(icon, size: 40, color: Colors.yellow),
             SizedBox(height: 10),
             Text(
               title,

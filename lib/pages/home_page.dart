@@ -12,8 +12,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Définition des couleurs de Djibouti Telecom
-    const Color djiboutiYellow = Color.fromARGB(255, 255, 228, 132);
-    const Color djiboutiBlue = Color.fromARGB(255, 14, 80, 161);
+    const Color djiboutiYellow = Color(0xFFF7C700); // Jaune/doré du logo
+    const Color djiboutiBlue = Color(0xFF002555); // Bleu marine du logo
 
     return Scaffold(
       backgroundColor: Colors.white,

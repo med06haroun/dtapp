@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  static const dtBlue = Color.fromARGB(255, 14, 80, 161);
+  static const dtBlue = Color(0xFF002555); // Bleu marine du logo
 
   @override
   Widget build(BuildContext context) {

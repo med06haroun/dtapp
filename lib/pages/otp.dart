@@ -19,8 +19,8 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   );
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
 
-  static const Color djiboutiBlue = Color.fromARGB(255, 14, 80, 161);
-  static const Color highlightColor = Color.fromARGB(255, 255, 228, 132);
+  static const Color djiboutiBlue = Color(0xFF002555); // Bleu marine du logo
+  static const Color highlightColor = Color(0xFFF7C700); // Jaune/doré du logo
 
   @override
   void dispose() {
