@@ -13,7 +13,6 @@ class _LoginPageState extends State<LoginPage> {
   final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   static const dtBlue = Color.fromARGB(255, 14, 80, 161);
-  static const dtYellow = Color.fromARGB(255, 255, 228, 132);
 
   @override
   Widget build(BuildContext context) {
