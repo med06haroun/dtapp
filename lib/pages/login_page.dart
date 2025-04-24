@@ -80,7 +80,10 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _phoneController,
                         keyboardType: TextInputType.phone,
-                        style: const TextStyle(fontSize: 18, color: dtBlue),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF003696),
+                        ),
                         decoration: InputDecoration(
                           prefixIcon: Container(
                             padding: const EdgeInsets.symmetric(
@@ -146,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: dtBlue,
+                        backgroundColor: Color(0xFF003696),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
