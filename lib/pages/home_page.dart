@@ -3,6 +3,8 @@ import 'package:dtmobile/pages/package_purchase_page.dart';
 import 'package:dtmobile/pages/credit_recharge_page.dart';
 import 'package:dtmobile/pages/bill_payment_page.dart';
 import 'package:dtmobile/pages/money_transfer_page.dart';
+import 'package:dtmobile/pages/history_page.dart';
+import 'package:dtmobile/pages/my_line_page.dart';
 
 class HomePage extends StatelessWidget {
   final String phoneNumber;
@@ -60,7 +62,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(djiboutiBlue),
+      bottomNavigationBar: _buildBottomNavigationBar(context, djiboutiBlue),
     );
   }
 
@@ -181,12 +183,31 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  BottomNavigationBar _buildBottomNavigationBar(Color primaryColor) {
+  BottomNavigationBar _buildBottomNavigationBar(
+    BuildContext context,
+    Color primaryColor,
+  ) {
     return BottomNavigationBar(
+      currentIndex: 0, // Indice 0 pour la page Accueil
       type: BottomNavigationBarType.fixed,
       selectedItemColor: primaryColor,
       backgroundColor: Colors.white,
       unselectedItemColor: Colors.grey,
+      onTap: (index) {
+        if (index != 0) {
+          // Si l'utilisateur n'appuie pas sur l'onglet actuel (Accueil)
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      index == 1
+                          ? HistoryPage(phoneNumber: phoneNumber)
+                          : MyLinePage(phoneNumber: phoneNumber),
+            ),
+          );
+        }
+      },
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: 'Accueil'),
         BottomNavigationBarItem(
