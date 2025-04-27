@@ -19,6 +19,15 @@ class _MyLinePageState extends State<MyLinePage> {
   final Color djiboutiBlue = const Color(0xFF002555); // Bleu marine du logo
 
   bool _showBalance = false;
+  String? _fixedLineNumber;
+  final TextEditingController _fixedLineController = TextEditingController();
+  bool _isFixedLineEntered = false;
+
+  @override
+  void dispose() {
+    _fixedLineController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +52,21 @@ class _MyLinePageState extends State<MyLinePage> {
           children: [
             _buildPhoneInfoHeader(),
             const SizedBox(height: 16),
-            _buildBalanceCard(),
-            const SizedBox(height: 16),
-            _buildPackagesSection(),
-            const SizedBox(height: 16),
-            _buildServicesSection(),
+            // Affichage conditionnel basé sur la saisie du numéro fixe
+            if (!_isFixedLineEntered)
+              _buildFixedLineInputCard()
+            else
+              Column(
+                children: [
+                  _buildFixedLineInfoCard(),
+                  const SizedBox(height: 16),
+                  _buildBalanceCard(),
+                  const SizedBox(height: 16),
+                  _buildPackagesSection(),
+                  const SizedBox(height: 16),
+                  _buildServicesSection(),
+                ],
+              ),
           ],
         ),
       ),
@@ -115,7 +134,7 @@ class _MyLinePageState extends State<MyLinePage> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Fixe prépayé',
+                      'Mobile prépayé',
                       style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ],
@@ -130,6 +149,189 @@ class _MyLinePageState extends State<MyLinePage> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildFixedLineInputCard() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Consulter votre ligne fixe',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: djiboutiBlue,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Veuillez entrer votre numéro de ligne fixe pour consulter son statut et ses informations',
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _fixedLineController,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  labelText: 'Numéro de ligne fixe',
+                  prefixIcon: Icon(Icons.phone, color: djiboutiBlue),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: djiboutiBlue, width: 2),
+                  ),
+                  hintText: 'Ex: 21XXXXXX',
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: djiboutiBlue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Vérifier et traiter le numéro de ligne fixe
+                    String inputNumber = _fixedLineController.text.trim();
+                    if (inputNumber.isNotEmpty) {
+                      setState(() {
+                        _fixedLineNumber = inputNumber;
+                        _isFixedLineEntered = true;
+                      });
+                    }
+                  },
+                  child: const Text(
+                    'Consulter',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFixedLineInfoCard() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.home_filled, color: djiboutiBlue),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Ligne fixe',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: djiboutiBlue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit, color: djiboutiYellow),
+                    onPressed: () {
+                      setState(() {
+                        _isFixedLineEntered = false;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Icon(Icons.phone, size: 18, color: Colors.grey[600]),
+                  const SizedBox(width: 8),
+                  Text(
+                    _fixedLineNumber ?? '',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.green[100],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          size: 12,
+                          color: Colors.green[700],
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Ligne active',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Fixe prépayé',
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Icon(Icons.location_on, size: 18, color: Colors.grey[600]),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Quartier 4 - Djibouti ville',
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -149,7 +351,7 @@ class _MyLinePageState extends State<MyLinePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Solde principal',
+                    'Solde principal - Ligne fixe',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -179,7 +381,7 @@ class _MyLinePageState extends State<MyLinePage> {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        _showBalance ? '4,500' : '****',
+                        _showBalance ? '6,200' : '****',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -188,7 +390,7 @@ class _MyLinePageState extends State<MyLinePage> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'u',
+                        'DJF',
                         style: TextStyle(fontSize: 16, color: djiboutiBlue),
                       ),
                     ],
@@ -214,7 +416,7 @@ class _MyLinePageState extends State<MyLinePage> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Date d\'expiration: 30 Mai 2025',
+                'Date d\'expiration: 15 Mai 2025',
                 style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               ),
             ],
@@ -231,7 +433,7 @@ class _MyLinePageState extends State<MyLinePage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Mes forfaits actifs',
+            'Mes forfaits actifs - Ligne fixe',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -282,10 +484,10 @@ class _MyLinePageState extends State<MyLinePage> {
             ),
             child: Row(
               children: [
-                Icon(Icons.data_usage, color: djiboutiYellow, size: 22),
+                Icon(Icons.wifi, color: djiboutiYellow, size: 22),
                 const SizedBox(width: 8),
                 const Text(
-                  'Internet',
+                  'Internet Fixe',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -301,12 +503,12 @@ class _MyLinePageState extends State<MyLinePage> {
                 CircularPercentIndicator(
                   radius: 50.0,
                   lineWidth: 10.0,
-                  percent: 0.42, // 4.2 Go sur 10 Go
+                  percent: 0.65, // 65 Go sur 100 Go
                   center: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '4.2',
+                        '65',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -321,13 +523,13 @@ class _MyLinePageState extends State<MyLinePage> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Forfait Internet 10 Go',
+                  'Forfait Internet Fixe 100 Go',
                   style: TextStyle(fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Expire le 30 Avr 2025',
+                  'Expire le 15 Mai 2025',
                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   textAlign: TextAlign.center,
                 ),
@@ -369,7 +571,7 @@ class _MyLinePageState extends State<MyLinePage> {
                 Icon(Icons.call, color: djiboutiYellow, size: 22),
                 const SizedBox(width: 8),
                 const Text(
-                  'Appels',
+                  'Appels Fixe',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -385,12 +587,12 @@ class _MyLinePageState extends State<MyLinePage> {
                 CircularPercentIndicator(
                   radius: 50.0,
                   lineWidth: 10.0,
-                  percent: 0.15, // 45 minutes sur 300 minutes
+                  percent: 0.32, // 160 minutes sur 500 minutes
                   center: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '45',
+                        '160',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -405,13 +607,13 @@ class _MyLinePageState extends State<MyLinePage> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Forfait Appels 300 min',
+                  'Forfait Appels Fixe 500 min',
                   style: TextStyle(fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Expire le 25 Avr 2025',
+                  'Expire le 15 Mai 2025',
                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   textAlign: TextAlign.center,
                 ),
@@ -430,54 +632,7 @@ class _MyLinePageState extends State<MyLinePage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Services actifs',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: djiboutiBlue,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        ListView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          children: [
-            _buildServiceCard(
-              'Appel en attente',
-              'Service activé',
-              Icons.call_merge,
-              true,
-            ),
-            const SizedBox(height: 8),
-            _buildServiceCard(
-              'Transfert d\'appel',
-              'Service désactivé',
-              Icons.call_split,
-              false,
-            ),
-            const SizedBox(height: 8),
-            _buildServiceCard(
-              'Roaming international',
-              'Service activé',
-              Icons.language,
-              true,
-            ),
-            const SizedBox(height: 8),
-            _buildServiceCard(
-              'SMS international',
-              'Service activé',
-              Icons.message,
-              true,
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Consommation récente',
+            'Consommation récente - Ligne fixe',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -489,48 +644,6 @@ class _MyLinePageState extends State<MyLinePage> {
         _buildConsumptionCard(),
         const SizedBox(height: 24),
       ],
-    );
-  }
-
-  Widget _buildServiceCard(
-    String title,
-    String status,
-    IconData icon,
-    bool isActive,
-  ) {
-    return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: isActive ? djiboutiBlue.withOpacity(0.1) : Colors.grey[200],
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(icon, color: isActive ? djiboutiBlue : Colors.grey[600]),
-        ),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-        subtitle: Text(
-          status,
-          style: TextStyle(
-            fontSize: 12,
-            color: isActive ? Colors.green[700] : Colors.grey[600],
-          ),
-        ),
-        trailing: Switch(
-          value: isActive,
-          activeColor: djiboutiYellow,
-          activeTrackColor: djiboutiBlue,
-          onChanged: (value) {
-            // Action pour activer/désactiver le service
-            setState(() {
-              // Code pour mettre à jour l'état du service
-            });
-          },
-        ),
-      ),
     );
   }
 
@@ -556,24 +669,21 @@ class _MyLinePageState extends State<MyLinePage> {
               const SizedBox(height: 16),
               // Données
               _buildConsumptionItem(
-                'Données mobiles',
-                '5.8 Go',
-                '10.0 Go',
-                0.58,
-                Icons.data_usage,
+                'Internet fixe',
+                '35 Go',
+                '100 Go',
+                0.35,
+                Icons.wifi,
               ),
               const SizedBox(height: 16),
               // Appels
               _buildConsumptionItem(
-                'Appels',
-                '255 min',
-                '300 min',
-                0.85,
+                'Appels fixe',
+                '340 min',
+                '500 min',
+                0.68,
                 Icons.call,
               ),
-              const SizedBox(height: 16),
-              // SMS
-              _buildConsumptionItem('SMS', '28', '100', 0.28, Icons.message),
               const SizedBox(height: 16),
               // Bouton pour plus de détails
               Center(

@@ -11,13 +11,8 @@ class BillPaymentPage extends StatefulWidget {
 }
 
 class _BillPaymentPageState extends State<BillPaymentPage> {
-  String _selectedBillType = "Électricité";
-  final List<String> _billTypes = [
-    "Électricité",
-    "Eau",
-    "Internet",
-    "Téléphone fixe",
-  ];
+  String _selectedBillType = "Internet";
+  final List<String> _billTypes = ["Internet", "Téléphone fixe"];
   final TextEditingController _customerIdController = TextEditingController();
   final TextEditingController _billNumberController = TextEditingController();
   String _selectedPaymentMethod = "D-Money";
@@ -160,26 +155,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _customerIdController,
-                          decoration: InputDecoration(
-                            labelText: 'Identifiant client',
-                            hintText:
-                                _selectedBillType == "Électricité"
-                                    ? 'N° client EDD'
-                                    : _selectedBillType == "Eau"
-                                    ? 'N° client ONEAD'
-                                    : 'N° client',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
+
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: _billNumberController,

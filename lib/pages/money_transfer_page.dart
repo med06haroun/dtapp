@@ -12,11 +12,7 @@ class MoneyTransferPage extends StatefulWidget {
 
 class _MoneyTransferPageState extends State<MoneyTransferPage> {
   String _selectedTransferType = "D-Money";
-  final List<String> _transferTypes = [
-    "D-Money",
-    "Mobile à Mobile",
-    "International",
-  ];
+  final List<String> _transferTypes = ["D-Money", "Mobile à Mobile"];
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
@@ -280,10 +276,6 @@ class _MoneyTransferPageState extends State<MoneyTransferPage> {
                           TextFormField(
                             controller: _recipientController,
                             decoration: InputDecoration(
-                              labelText:
-                                  _selectedTransferType == "International"
-                                      ? 'Numéro international'
-                                      : 'Numéro du destinataire',
                               hintText:
                                   _selectedTransferType == "International"
                                       ? '+2537XXXXXXX'
@@ -324,70 +316,10 @@ class _MoneyTransferPageState extends State<MoneyTransferPage> {
                             keyboardType: TextInputType.number,
                           ),
                           const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _messageController,
-                            decoration: InputDecoration(
-                              labelText: 'Message (optionnel)',
-                              hintText: 'Ajouter un message',
-                              prefixIcon: Icon(
-                                Icons.message,
-                                color: djiboutiBlue,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 16,
-                              ),
-                            ),
-                            maxLines: 2,
-                          ),
                         ],
                       ),
                     ),
                   ),
-
-                  if (_selectedTransferType == "International") ...[
-                    const SizedBox(height: 16),
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Informations importantes',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: djiboutiBlue,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              '• Les transferts internationaux peuvent prendre jusqu\'à 24h',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              '• Des frais supplémentaires peuvent s\'appliquer',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              '• Vérifiez que le numéro international est correct',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
 
                   const SizedBox(height: 24),
                   // Bouton de confirmation
@@ -536,8 +468,6 @@ class _MoneyTransferPageState extends State<MoneyTransferPage> {
         return 0; // Pas de frais pour D-Money
       case "Mobile à Mobile":
         return amount * 0.01; // 1% de frais
-      case "International":
-        return amount * 0.05 + 100; // 5% + frais fixes
       default:
         return 0;
     }

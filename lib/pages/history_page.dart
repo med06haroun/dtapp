@@ -334,6 +334,7 @@ class _HistoryPageState extends State<HistoryPage>
         'dueDate': '30 Avr 2025',
         'status': 'Non payée',
         'isPaid': false,
+        'invoiceNumber': 'FACT-82539-2025',
       },
       {
         'type': 'Facture Téléphone',
@@ -342,6 +343,7 @@ class _HistoryPageState extends State<HistoryPage>
         'dueDate': '25 Avr 2025',
         'status': 'Payée',
         'isPaid': true,
+        'invoiceNumber': 'FACT-79845-2025',
       },
       {
         'type': 'Facture Internet',
@@ -350,6 +352,7 @@ class _HistoryPageState extends State<HistoryPage>
         'dueDate': '30 Mar 2025',
         'status': 'Payée',
         'isPaid': true,
+        'invoiceNumber': 'FACT-73251-2025',
       },
       {
         'type': 'Facture Téléphone',
@@ -358,6 +361,7 @@ class _HistoryPageState extends State<HistoryPage>
         'dueDate': '25 Mar 2025',
         'status': 'Payée',
         'isPaid': true,
+        'invoiceNumber': 'FACT-71468-2025',
       },
     ];
 
@@ -415,6 +419,16 @@ class _HistoryPageState extends State<HistoryPage>
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 8),
+                    // Ajout du numéro de facture
+                    Text(
+                      'N° ${bill['invoiceNumber']}',
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Row(
