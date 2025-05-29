@@ -186,12 +186,9 @@ class _CreditRechargePageState extends State<CreditRechargePage>
                       // Modifiez la partie du TabBar dans le build() comme ceci
                       Container(
                         height: 56,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(28),
-                        ),
                         child: TabBar(
                           controller: _tabController,
+                          dividerHeight: 0,
                           indicator: BoxDecoration(
                             color: djiboutiBlue,
                             borderRadius: BorderRadius.circular(28),
@@ -203,6 +200,11 @@ class _CreditRechargePageState extends State<CreditRechargePage>
                               ),
                             ],
                           ),
+                          indicatorSize:
+                              TabBarIndicatorSize.tab, // Ajoutez cette ligne
+                          labelPadding: EdgeInsets.symmetric(
+                            horizontal: 3,
+                          ), // Ajustez si nécessaire
                           labelColor: Colors.white,
                           unselectedLabelColor: Colors.grey[700],
                           labelStyle: const TextStyle(
@@ -217,7 +219,7 @@ class _CreditRechargePageState extends State<CreditRechargePage>
                             Tab(
                               child: FittedBox(
                                 // Utilisation de FittedBox pour adapter le contenu
-                                fit: BoxFit.scaleDown,
+                                fit: BoxFit.cover,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -301,7 +303,7 @@ class _CreditRechargePageState extends State<CreditRechargePage>
               const SizedBox(width: 8),
               const Expanded(
                 child: Text(
-                  'Entrez le code à 14 chiffres de votre carte de recharge',
+                  'Entrez le code à 12 chiffres de votre carte de recharge',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
@@ -314,25 +316,14 @@ class _CreditRechargePageState extends State<CreditRechargePage>
             style: const TextStyle(fontSize: 16, letterSpacing: 1.2),
             decoration: InputDecoration(
               labelText: 'Code de recharge',
-              hintText: 'Ex: 12345678901234',
+              hintText: 'Ex: 123456789012',
               floatingLabelBehavior: FloatingLabelBehavior.always,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(color: Colors.grey.shade300),
               ),
               prefixIcon: Icon(Icons.credit_card, color: primaryColor),
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.camera_alt_outlined),
-                onPressed: () {
-                  // Scan functionality could be added here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Scanner le code de recharge'),
-                      duration: Duration(seconds: 1),
-                    ),
-                  );
-                },
-              ),
+
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(color: primaryColor, width: 2),
@@ -347,7 +338,7 @@ class _CreditRechargePageState extends State<CreditRechargePage>
                 return 'Veuillez entrer le code de recharge';
               }
               if (value.length != 14) {
-                return 'Le code doit comporter 14 chiffres';
+                return 'Le code doit comporter 12 chiffres';
               }
               return null;
             },

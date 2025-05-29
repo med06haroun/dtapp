@@ -16,7 +16,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
   final TextEditingController _customerIdController = TextEditingController();
   final TextEditingController _billNumberController = TextEditingController();
   String _selectedPaymentMethod = "D-Money";
-  final List<String> _paymentMethods = ["D-Money", "Carte bancaire"];
+  final List<String> _paymentMethods = ["D-Money", "Main Account"];
 
   @override
   void dispose() {
@@ -177,8 +177,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_customerIdController.text.isEmpty ||
-                                  _billNumberController.text.isEmpty) {
+                              if (_billNumberController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -229,6 +228,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -275,8 +275,8 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
       ),
       builder:
           (context) => Container(
-            padding: const EdgeInsets.all(20),
-            height: MediaQuery.of(context).size.height * 0.7,
+            padding: const EdgeInsets.all(10),
+            height: MediaQuery.of(context).size.height * 0.9,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -396,7 +396,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                     },
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -405,7 +405,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                       // Simulation du paiement
                       showDialog(
                         context: context,
-                        barrierDismissible: false,
+                        barrierDismissible: true,
                         builder:
                             (context) => AlertDialog(
                               content: Row(
@@ -469,6 +469,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
