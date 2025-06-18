@@ -4,7 +4,7 @@ class FeatureCard extends StatelessWidget {
   final String title;
   final IconData icon;
 
-  FeatureCard(this.title, this.icon);
+  const FeatureCard(this.title, this.icon, {super.key});
 
   @override
   Widget build(BuildContext context) {

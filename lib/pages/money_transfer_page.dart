@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class MoneyTransferPage extends StatefulWidget {
   final String phoneNumber;
 
-  const MoneyTransferPage({Key? key, required this.phoneNumber})
-    : super(key: key);
+  const MoneyTransferPage({super.key, required this.phoneNumber});
 
   @override
   _MoneyTransferPageState createState() => _MoneyTransferPageState();
@@ -129,7 +128,7 @@ class _MoneyTransferPageState extends State<MoneyTransferPage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                Container(
+                SizedBox(
                   height: 50,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,

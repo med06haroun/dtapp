@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 class OTPVerificationPage extends StatefulWidget {
   final String phoneNumber;
 
-  const OTPVerificationPage({Key? key, required this.phoneNumber})
-    : super(key: key);
+  const OTPVerificationPage({super.key, required this.phoneNumber});
 
   @override
   State<OTPVerificationPage> createState() => _OTPVerificationPageState();
@@ -123,8 +122,8 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
               ElevatedButton(
                 onPressed: _verifyOTP,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: djiboutiBlue,
-                  foregroundColor: highlightColor,
+                  backgroundColor: Color.fromARGB(255, 1, 50, 136),
+                  foregroundColor: Color.fromARGB(255, 255, 255, 255),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

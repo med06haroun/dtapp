@@ -82,13 +82,15 @@ class _LoginPageState extends State<LoginPage> {
                         keyboardType: TextInputType.phone,
                         style: const TextStyle(
                           fontSize: 18,
-                          color: Color(0xFF003696),
+                          color: dtBlue,
+                          fontWeight: FontWeight.bold,
                         ),
+
                         decoration: InputDecoration(
                           prefixIcon: Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 15,
-                              vertical: 6,
+                              vertical: 5,
                             ),
                             margin: const EdgeInsets.symmetric(
                               horizontal: 8,
@@ -149,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF003696),
+                        backgroundColor: Color.fromARGB(255, 1, 50, 136),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(

@@ -4,8 +4,11 @@ import 'package:dtmobile/pages/select_number_page.dart';
 class PackagePurchasePage extends StatefulWidget {
   final String phoneNumber;
 
-  const PackagePurchasePage({Key? key, required this.phoneNumber})
-    : super(key: key);
+  const PackagePurchasePage({
+    super.key,
+    required this.phoneNumber,
+    required packageDetails,
+  });
 
   @override
   _PackagePurchasePageState createState() => _PackagePurchasePageState();
@@ -13,7 +16,7 @@ class PackagePurchasePage extends StatefulWidget {
 
 class _PackagePurchasePageState extends State<PackagePurchasePage> {
   String? selectedNumber;
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentStep = 0;
   String? selectedPackageType;
   PackageModel? selectedPackage;
@@ -264,88 +267,190 @@ class _PackagePurchasePageState extends State<PackagePurchasePage> {
   }
 
   // Page 4: Confirmation
+  // Modification de la méthode _buildConfirmationPage() dans la classe _PackagePurchasePageState
   Widget _buildConfirmationPage() {
-    return Column(
-      children: [
-        Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+    // Générer un numéro de transaction unique
+    final String transactionId =
+        'TR-${DateTime.now().millisecondsSinceEpoch.toString().substring(5)}';
+    final String currentDate =
+        '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+    final String currentTime =
+        '${DateTime.now().hour}:${DateTime.now().minute}';
+
+    // Obtenir la taille de l'écran pour la responsivité
+    final size = MediaQuery.of(context).size;
+    final isSmallScreen = size.width < 360;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // En-tête de succès
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 24),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.green[50],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
               children: [
                 Container(
-                  width: 120,
-                  height: 120,
+                  padding: EdgeInsets.all(isSmallScreen ? 8 : 10),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: Stack(
+                  child: Icon(
+                    Icons.check_circle_outline,
+                    color: Colors.green[700],
+                    size: isSmallScreen ? 30 : 40,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: const BoxDecoration(
-                            color: djiboutiYellow,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.person,
-                            size: 40,
-                            color: Colors.white,
-                          ),
+                      Text(
+                        'Paiement réussi !',
+                        style: TextStyle(
+                          fontSize: isSmallScreen ? 16 : 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[700],
                         ),
                       ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: const BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.check,
-                            size: 20,
-                            color: Colors.white,
-                          ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Votre forfait a été activé avec succès',
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: isSmallScreen ? 12 : 14,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
-                const Text(
-                  'Réussite',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                  ),
+              ],
+            ),
+          ),
+
+          // Détails du reçu
+          Container(
+            padding: EdgeInsets.all(isSmallScreen ? 12 : 15),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Détails du reçu',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: djiboutiBlue,
+                        fontSize: isSmallScreen ? 14 : 16,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.green[100],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        'Payé',
+                        style: TextStyle(
+                          color: Colors.green[700],
+                          fontWeight: FontWeight.bold,
+                          fontSize: isSmallScreen ? 10 : 12,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Achat de pass confirmé',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                const Divider(height: 24),
+                _buildInfoRow(
+                  'Forfait:',
+                  selectedPackage?.name ?? '',
+                  isSmallScreen,
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Super! Votre pass a bien été activé.',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                _buildInfoRow(
+                  'Montant:',
+                  selectedPackage?.price ?? '',
+                  isSmallScreen,
+                ),
+                const SizedBox(height: 8),
+                _buildInfoRow(
+                  'Méthode:',
+                  selectedPaymentMethod == 'D-Money' ? 'D-Money' : 'Mon solde',
+                  isSmallScreen,
+                ),
+                const SizedBox(height: 8),
+                _buildInfoRow(
+                  'Date:',
+                  '$currentDate à $currentTime',
+                  isSmallScreen,
+                ),
+                const SizedBox(height: 8),
+                _buildInfoRow(
+                  'Validité:',
+                  selectedPackage?.validity ?? '',
+                  isSmallScreen,
+                ),
+                if (selectedNumber != null) ...[
+                  const SizedBox(height: 8),
+                  _buildInfoRow('Numéro:', selectedNumber!, isSmallScreen),
+                ],
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Message d'information
+          Container(
+            padding: EdgeInsets.all(isSmallScreen ? 12 : 15),
+            decoration: BoxDecoration(
+              color: Colors.blue[50],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  color: djiboutiBlue,
+                  size: isSmallScreen ? 18 : 20,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Votre forfait est maintenant actif. Vous pouvez le consulter dans la section "Mes forfaits actifs".',
+                    style: TextStyle(
+                      color: djiboutiBlue,
+                      fontSize: isSmallScreen ? 12 : 14,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
+
+          const SizedBox(height: 32),
+
+          // Boutons en bas
+          Column(
             children: [
               _buildBottomButton(
                 text: 'Acheter un autre Forfait',
@@ -370,6 +475,32 @@ class _PackagePurchasePageState extends State<PackagePurchasePage> {
                 isSecondary: true,
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Ajouter cette méthode helper pour les lignes d'informations
+  Widget _buildInfoRow(String label, String value, bool isSmallScreen) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: isSmallScreen ? 12 : 14,
+            color: Colors.grey[700],
+          ),
+        ),
+        Flexible(
+          child: Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: isSmallScreen ? 12 : 14,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
@@ -728,7 +859,7 @@ class _PackagePurchasePageState extends State<PackagePurchasePage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isSelected ? djiboutiYellow : Colors.grey[200]!,
+                color: isSelected ? djiboutiBlue : Colors.grey[200]!,
                 width: isSelected ? 2 : 1,
               ),
             ),
@@ -767,7 +898,7 @@ class _PackagePurchasePageState extends State<PackagePurchasePage> {
                   ),
                 ),
                 if (isSelected)
-                  const Icon(Icons.check_circle, color: djiboutiYellow)
+                  const Icon(Icons.check_circle, color: djiboutiBlue)
                 else
                   const Icon(
                     Icons.arrow_forward_ios,
@@ -792,7 +923,7 @@ class _PackagePurchasePageState extends State<PackagePurchasePage> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isSecondary ? Colors.white : djiboutiYellow,
+          backgroundColor: isSecondary ? Colors.white : djiboutiBlue,
           foregroundColor: isSecondary ? Colors.black : Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(

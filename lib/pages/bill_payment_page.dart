@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class BillPaymentPage extends StatefulWidget {
   final String phoneNumber;
 
-  const BillPaymentPage({Key? key, required this.phoneNumber})
-    : super(key: key);
+  const BillPaymentPage({super.key, required this.phoneNumber});
 
   @override
   _BillPaymentPageState createState() => _BillPaymentPageState();
@@ -90,7 +89,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                Container(
+                SizedBox(
                   height: 50,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -337,7 +336,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
-                Container(
+                SizedBox(
                   height: 50,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,

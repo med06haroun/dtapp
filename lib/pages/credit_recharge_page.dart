@@ -4,8 +4,7 @@ import 'package:dtmobile/pages/select_number_page.dart';
 class CreditRechargePage extends StatefulWidget {
   final String phoneNumber;
 
-  const CreditRechargePage({Key? key, required this.phoneNumber})
-    : super(key: key);
+  const CreditRechargePage({super.key, required this.phoneNumber});
 
   @override
   _CreditRechargePageState createState() => _CreditRechargePageState();
@@ -184,7 +183,7 @@ class _CreditRechargePageState extends State<CreditRechargePage>
 
                       // TabBar redessiné
                       // Modifiez la partie du TabBar dans le build() comme ceci
-                      Container(
+                      SizedBox(
                         height: 56,
                         child: TabBar(
                           controller: _tabController,

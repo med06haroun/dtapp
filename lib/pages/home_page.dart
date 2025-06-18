@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dtmobile/pages/package_purchase_page.dart';
 import 'package:dtmobile/pages/credit_recharge_page.dart';
-import 'package:dtmobile/pages/bill_payment_page.dart';
+import 'package:dtmobile/pages/bill_payment_page.dart' as bill_payment;
 import 'package:dtmobile/pages/money_transfer_page.dart';
 import 'package:dtmobile/pages/history_page.dart';
 import 'package:dtmobile/pages/my_line_page.dart';
@@ -9,7 +9,7 @@ import 'package:dtmobile/pages/my_line_page.dart';
 class HomePage extends StatelessWidget {
   final String phoneNumber;
 
-  const HomePage({Key? key, required this.phoneNumber}) : super(key: key);
+  const HomePage({super.key, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
     const Color djiboutiBlue = Color(0xFF002555); // Bleu marine du logo
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: _buildAppBar(djiboutiBlue, djiboutiYellow),
       body: SingleChildScrollView(
         child: Padding(
@@ -236,7 +236,7 @@ class HomePage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Color(0xFFF5F5F5),
               shape: BoxShape.circle,
             ),
             child: CircleAvatar(
@@ -265,7 +265,11 @@ class HomePage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PackagePurchasePage(phoneNumber: phoneNumber),
+        builder:
+            (context) => PackagePurchasePage(
+              phoneNumber: phoneNumber,
+              packageDetails: null,
+            ),
       ),
     );
   }
@@ -283,7 +287,8 @@ class HomePage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BillPaymentPage(phoneNumber: phoneNumber),
+        builder:
+            (context) => bill_payment.BillPaymentPage(phoneNumber: phoneNumber),
       ),
     );
   }
@@ -307,14 +312,14 @@ class AccountCard extends StatefulWidget {
   final Color accentColor;
 
   const AccountCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.balance,
     required this.suffix,
     required this.primaryColor,
     required this.accentColor,
-  }) : super(key: key);
+  });
 
   @override
   _AccountCardState createState() => _AccountCardState();

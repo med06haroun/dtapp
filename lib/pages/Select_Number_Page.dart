@@ -6,11 +6,11 @@ class SelectNumberPage extends StatefulWidget {
   final Function(String selectedNumber) onNumberSelected;
 
   const SelectNumberPage({
-    Key? key,
+    super.key,
     required this.phoneNumber,
     required this.operationType,
     required this.onNumberSelected,
-  }) : super(key: key);
+  });
 
   @override
   _SelectNumberPageState createState() => _SelectNumberPageState();

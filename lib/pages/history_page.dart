@@ -5,7 +5,7 @@ import 'package:dtmobile/pages/my_line_page.dart';
 class HistoryPage extends StatefulWidget {
   final String phoneNumber;
 
-  const HistoryPage({Key? key, required this.phoneNumber}) : super(key: key);
+  const HistoryPage({super.key, required this.phoneNumber});
 
   @override
   _HistoryPageState createState() => _HistoryPageState();
@@ -383,7 +383,7 @@ class _HistoryPageState extends State<HistoryPage>
 // Widget utilitaire pour les coins arrondis sur les LinearProgressIndicator
 class ClipRoundedRectangle extends StatelessWidget {
   final Widget child;
-  const ClipRoundedRectangle({Key? key, required this.child}) : super(key: key);
+  const ClipRoundedRectangle({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) =>
