@@ -270,8 +270,6 @@ class _PackagePurchasePageState extends State<PackagePurchasePage> {
   // Modification de la méthode _buildConfirmationPage() dans la classe _PackagePurchasePageState
   Widget _buildConfirmationPage() {
     // Générer un numéro de transaction unique
-    final String transactionId =
-        'TR-${DateTime.now().millisecondsSinceEpoch.toString().substring(5)}';
     final String currentDate =
         '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
     final String currentTime =

@@ -1326,35 +1326,6 @@ class _PackagePaymentMethodScreenState
     extends State<PackagePaymentMethodScreen> {
   String _selectedPaymentMethod = 'D-Money';
 
-  Widget _buildResponsiveInfoRow(
-    String label,
-    String value,
-    bool isSmallScreen,
-  ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: isSmallScreen ? 12 : 14,
-            color: Colors.grey[700],
-          ),
-        ),
-        Flexible(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: isSmallScreen ? 12 : 14,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // Obtenir la taille de l'écran pour la responsivité
@@ -3051,37 +3022,7 @@ class _MyLinePageState extends State<MyLinePage> {
         );
   }
 
-  //
-
-  Widget _buildResponsiveInfoRow(
-    String label,
-    String value,
-    bool isSmallScreen,
-  ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: isSmallScreen ? 12 : 14,
-            color: Colors.grey[700],
-          ),
-        ),
-        Flexible(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: isSmallScreen ? 12 : 14,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
-
+  // Méthode pour afficher un état vide
   Widget _buildEmptyState(String message) {
     return Center(
       child: Column(
